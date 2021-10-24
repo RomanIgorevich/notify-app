@@ -1,20 +1,30 @@
 export default {
   state: {
-    message: [],
+    messages: [],
+    messagesMain: [],
   },
   mutations: {
-    setMessage(state, payload) {
-      state.message = payload;
+    setMessages(state, payload) {
+      state.messages = payload;
+    },
+    setMessagesMain(state, payload) {
+      state.messagesMain = payload;
     },
   },
   actions: {
-    setMessage({ commit }, payload) {
-      commit("setMessage", payload);
+    setMessages({ commit }, payload) {
+      commit("setMessages", payload);
+    },
+    setMessagesMain({ commit }, payload) {
+      commit("setMessagesMain", payload);
     },
   },
   getters: {
-    getMessage(state) {
-      return state.message;
+    getMessages(state) {
+      return state.messages;
+    },
+    getMessagesMain(state) {
+      return state.messagesMain;
     },
   },
 };
