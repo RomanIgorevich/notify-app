@@ -1,28 +1,35 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <button @click="addM">click</button>
+    <div v-for="mes in message" :key="mes.title">
+      <p v-text="mes.title" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import axios from "axios";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  computed: {
+    message() {
+      return this.$store.getters.getMessage;
+    },
+  },
+  mounted() {
+    this.addM();
+  },
+  methods: {
+    addM() {
+      axios
+        .get("http://localhost:3000/message")
+        .then((r) => {
+          this.$store.dispatch("setMessage", r.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => console.log("метод завершон"));
+    },
+  },
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
