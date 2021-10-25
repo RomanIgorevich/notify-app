@@ -1,10 +1,9 @@
 <template>
   <div>
-    <div v-for="mes in message" :key="mes.title">
+    <div v-for="mes in messagesMain" :key="mes.title">
       <p v-text="mes.title" />
     </div>
-    <button @click="addM">Load more</button>
-
+    <button @click="loadMore">Load more</button>
   </div>
 </template>
 
@@ -12,8 +11,8 @@
 import axios from "axios";
 export default {
   computed: {
-    message() {
-      return this.$store.getters.getMessagesMain ;
+    messagesMain() {
+      return this.$store.getters.getMessagesMain;
     },
   },
   mounted() {
@@ -31,7 +30,7 @@ export default {
             if (res[i].main) messagesMain.push(res[i]);
             else messages.push(res[i]);
           }
-          console.log({messagesMain, messages})
+          console.log({ messagesMain, messages });
           this.$store.dispatch("setMessages", messages);
           this.$store.dispatch("setMessagesMain", messagesMain);
         })
@@ -39,6 +38,12 @@ export default {
           console.log(error);
         })
         .finally(() => console.log("метод завершон"));
+    },
+    loadMore() {
+      console.log("t");
+      this.$store.dispatch("loadMessages").catch((err) => {
+        console.log(err);
+      });
     },
   },
 };
