@@ -3,7 +3,13 @@
     <div v-for="mes in messagesMain" :key="mes.title">
       <p v-text="mes.title" />
     </div>
-    <button @click="loadMore">Load more</button>
+    <button
+      @click="loadMore"
+      :disabled="maxLength === 0"
+      :class="{ btnDisabled: maxLength === 0 }"
+    >
+      Load more
+    </button>
   </div>
 </template>
 
@@ -13,6 +19,9 @@ export default {
   computed: {
     messagesMain() {
       return this.$store.getters.getMessagesMain;
+    },
+    maxLength() {
+      return this.$store.getters.getMessageFilter.length;
     },
   },
   mounted() {
@@ -48,3 +57,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.btnDisabled {
+  cursor: default;
+  opacity: 0.6;
+}
+</style>
